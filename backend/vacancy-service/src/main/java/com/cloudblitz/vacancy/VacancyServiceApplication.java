@@ -4,8 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class VacancyServiceApplication {
+@PropertySource("classpath:application.properties") // Ensures properties file is loaded
+public class CareerSiteApplication {
     public static void main(String[] args) {
-        SpringApplication.run(VacancyServiceApplication.class, args);
+        SpringApplication.run(CareerSiteApplication.class, args);
     }
 }
