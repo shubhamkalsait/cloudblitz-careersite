@@ -1,0 +1,48 @@
+CREATE DATABASE career_site;
+USE career_site;
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('STUDENT', 'EMPLOYER') NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE vacancies (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    employer_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT NOT NULL,
+    location VARCHAR(100),
+    salary DECIMAL(10,2),
+    posted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (employer_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE applications (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    student_id INT NOT NULL,
+    vacancy_id INT NOT NULL,
+    resume_url VARCHAR(255) NOT NULL,
+    cover_letter TEXT,
+    applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (student_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (vacancy_id) REFERENCES vacancies(id) ON DELETE CASCADE
+);
+
+INSERT INTO users (name, email, password, role) VALUES
+('John Doe', 'john.doe@email.com', 'hashedpassword1', 'STUDENT'),
+('Jane Smith', 'jane.smith@email.com', 'hashedpassword2', 'STUDENT'),
+('TechCorp HR', 'hr@techcorp.com', 'hashedpassword3', 'EMPLOYER'),
+('Innovate Ltd HR', 'hr@innovate.com', 'hashedpassword4', 'EMPLOYER');
+
+INSERT INTO vacancies (employer_id, title, description, location, salary) VALUES
+(3, 'Software Engineer', 'Looking for a skilled software engineer.', 'New York', 75000.00),
+(3, 'DevOps Engineer', 'Responsible for CI/CD pipeline and cloud infrastructure.', 'San Francisco', 90000.00),
+(4, 'Data Analyst', 'Analyze and interpret complex data sets.', 'Chicago', 65000.00);
+
+INSERT INTO applications (student_id, vacancy_id, resume_url, cover_letter) VALUES
+(1, 1, '/uploads/resumes/john_doe.pdf', 'I am excited to apply for this role at TechCorp.'),
+(2, 2, '/uploads/resumes/jane_smith.pdf', 'Looking forward to contributing to your DevOps team.');
