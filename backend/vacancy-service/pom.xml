@@ -28,9 +28,10 @@
 
     <!-- MySQL Connector -->
     <dependency>
-        <groupId>mysql</groupId>
-        <artifactId>mysql-connector-java</artifactId>
-        <scope>runtime</scope>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.33</version>  <!-- Explicitly specify a stable version -->
+      <scope>runtime</scope>
     </dependency>
 
     <!-- Spring Boot Starter Test -->
